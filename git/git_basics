@@ -1,0 +1,55 @@
+###1
+git config: to configure a user name, email address, editor, and other preferences once per machine.
+git init: initializes a repository.
+git status: shows the status of a repository.
+Files can be stored in a project's working directory (which users see), the staging area (where the next commit is being built up) and the local repository (where snapshots are permanently recorded).
+git add: puts files in the staging area.
+git commit: creates a snapshot of the staging area in the local repository.
+	git commit -m "Add the ignore file"
+Always write a log message when committing changes.
+git diff: displays differences between revisions.
+git checkout: recovers old versions of files.
+	git checkout HEAD~* mars.txt   *=steps before
+.gitignore file: tells Git what files to ignore.
+###2
+
+git remote add origin https://github.com/victortxa/git_first.git #link loca com git remoto
+git push: copies changes from a local repository to a remote repository.
+	git push origin master		#atualiza novos commits
+git pull: copies changes from a remote repository to a local repository.
+	git pull origin master
+git clone: copies a remote repository to create a local repository with a remote called origin automatically set up.
+	git clone https://github.com/victortxa/git_first.git mydir    #mydir=name where I cloned
+
+###3	
+http://git-scm.com/book/en/v2/Git-Basics-Undoing-Things
+
+git commit --amend:faz o commit substituindo o último commit feito, preserva a mensagem do último
+
+git reset HEAD nameofile: unstage the file
+
+http://git-scm.com/book/en/v2/Git-Basics-Tagging
+Creating an annotated tag
+git tag -a v1.4 -m 'my version 1.4'
+
+lightweight tag
+#git tag v0.1-lw
+
+Push tags
+git push origin v1.5
+git push origin --tags   #all tags
+
+
+#senha do Github em cache
+
+$git config --global credential.helper cache
+# Set git to use the credential memory cache
+$git config --global credential.helper 'cache --timeout=3600'
+# Set the cache to timeout after 1 hour (setting is in seconds)
+
+#merging master do projeto no meu fork
+git remote add upstream https://github.com/fatiando/fatiando
+git fetch upstream      #copy/update all branches from upstream
+git checkout master     #assuring I'm in the master branch
+git merge upstream/master   #merging the original with my fork
+git push origin master  #merge my local fork of master with the fork stored in github
