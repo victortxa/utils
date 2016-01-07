@@ -53,3 +53,18 @@ git fetch upstream      #copy/update all branches from upstream
 git checkout master     #assuring I'm in the master branch
 git merge upstream/master   #merging the original with my fork
 git push origin master  #merge my local fork of master with the fork stored in github
+
+#apos update do master, trazer mudancas para o branch onde estou trabalhando
+git checkout branch_trabalho
+git merge origin/master
+#Em caso de conflitos, resolver, entao:
+git add arquivos_conflito
+git commit -m ''
+
+#'advanced' option
+http://githowto.com/history
+git log --pretty=oneline  #log in one line
+#mudancas ultimos 7 dias 
+git log --all --pretty=format:"%h %cd %s (%an)" --since='7 days ago'
+
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
