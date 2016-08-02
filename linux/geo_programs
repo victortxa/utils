@@ -1,0 +1,153 @@
+#Editar /etc/profile
+############################################################################
+/etc/profile
+###INSTALACAO ANACONDA,SU,OPENSEASEIS,MADAGASCAR,OPENDTECT
+export CWPROOT=/usr/local/cwp
+PATH=$PATH:/usr/local/cwp/bin
+PATH=/usr/local/anaconda/bin:$PATH
+#####MADAGASCAR#####
+export RSFROOT=/usr/local/madagascar/madagascar-1.6.5
+source $RSFROOT/share/madagascar/etc/env.sh
+export TMPDATAPATH=/tmp/
+#######GMT#######
+PATH=$PATH:/usr/lib/gmt/bin
+#:/usr/share/doc/gmt:/usr/share/gmt:/usr/share/gmt/doc/gmt:/usr/lib/gmt:/usr/lib/gmt/www/gmt
+NETCDFHOME=/usr/lib
+export NETCDFHOME
+NETCDF_PREFIX=$NETCDFHOME
+GMTHOME=/usr/lib/gmt
+export GMTHOME
+MANPATH=$MANPATH:/usr/lib/gmt/man
+export MANPATH
+export GMTROOT=/usr/lib/gmt
+#####OpendTect####
+PATH=$PATH:/usr/local/OpendTect/5.0.0/bin/
+#####OpenSeaSeis
+export PATH=$PATH:/usr/local/openseaseis/bin
+#TEX LIVE
+PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-linux/
+############################################################################
+
+#Instalar OCtave via central de software
+#SU
+sudo mkdir /usr/local/cwp
+cd /usr/local/cwp
+cp ~/Downloads/cwp_su_all_43R8.tgz .
+sudo tar -xvf cwp_su_all_43R8.tgz
+sudo rm cwp_su_all_43R8.tgz 
+
+sudo apt-get install libx11-dev
+sudo apt-get install libxt-dev
+sudo apt-get install gfortran g++
+sudo apt-get install freeglut3-dev
+sudo apt-get install freeglut3
+sudo apt-get install freeglut3-dev
+sudo apt-get install libxmu-dev libxi-dev
+sudo apt-get install libc6
+sudo apt-get install libmotif4
+sudo apt-get install libxt6
+sudo apt-get install x11proto-print-dev
+sudo apt-get install libmotif-dev
+sudo apt-get install freeglut3-dev
+
+sudo cp configs/Makefile.config_Linux_x86_64 Makefile.config
+
+sudo su
+source /etc/profile
+echo $PATH 
+echo $CWPROOT 
+make install
+make xtinstall
+make finstall
+make mglinstall
+make utils
+make xminstall
+make sfinstall
+suplane | suximage title="My first test" &
+#fim SU
+
+#OpenSeaseis
+sudo apt-get install openjdk-6-jre
+sudo apt-get install default-jdk
+sudo apt-get install fftw3
+
+sudo mkdir /usr/local/openseaseis
+cd /usr/local/openseaseis
+sudo cp ~/Downloads/openseaseis_v2.03.tgz .
+sudo tar -xvf openseaseis_v2.03.tgz
+sudo rm openseaseis_v2.03.tgz
+sudo su
+./make_seaseis.sh
+./make_java.sh
+
+#Anaconda, Fatiando
+sudo su
+cd /home/lagex/Downloads
+bash Anaconda-2.x.x-Linux-x86[_64].sh
+source /etc/profile
+conda install numpy scipy matplotlib basemap imaging mayavi pip
+pip install fatiando
+
+#Madagascar
+sudo apt-get install scons openmpi-bin libopenmpi-dev
+sudo apt-get install libx11-dev libxaw7-dev libnetpbm10-dev swig
+sudo apt-get install libtiff4-dev scons units libblas-dev
+sudo apt-get install libcairo2-dev liblapack-dev libavcodec-dev
+sudo apt-get install libsuitesparse-dev
+sudo apt-get install libgd-dev
+sudo apt-get install python-scipy python-numpy
+sudo apt-get install libfftw3-dev
+
+sudo mkdir /usr/local/madagascar
+cd /usr/local/madagascar
+sudo cp ~/Downloads/madagascar-1.6.5.tar.gz .
+sudo tar xzvf madagascar-1.6.5.tar.gz 
+sudo rm madagascar-1.6.5.tar.gz
+cd madagascar-1.6.5/
+
+sudo ./configure --prefix=/usr/local/madagascar/madagascar-1.6.5
+sudo ./configure API=f95 --prefix=/usr/local/madagascar/madagascar-1.6.5/
+
+sudo make
+sudo make install
+
+#GMT
+sudo apt-get install gmt
+sudo apt-get install gmt-tutorial-pdf gmt-doc-pdf gmt-examples gmt-gshhs-high gmt-gshhs-full
+
+#texlive
+#Download from http://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip
+#Unzip
+#Go to the folder
+#sudo ./ install-tl 
+
+#OpendTect
+sudo apt-get install csh
+sudo su
+chmod 777 OpendTect_Installer_lux64.sh
+./OpendTect_Installer_lux64.sh
+
+#Git
+sudo apt-get install git
+
+#Google Earth Pro
+#Sem sucesso
+http://askubuntu.com/questions/579735/how-do-i-install-google-earth-pro-on-14-04 
+libgl1-mesa-glx:i386
+sudo apt-get install libfontconfig1:i386 libx11-6:i386 libxrender1:i386 libxext6:i386  libglu1-mesa:i386 libglib2.0-0:i386 libsm6:i386
+sudo apt-get install lsb-core
+
+sudo sh GoogleEarthLinux.bin
+Não funcionou 
+
+sudo add-apt-repository ppa:opencpn/opencpn
+sudo apt-get updatesudo apt-get update
+sudo apt-get update
+sudo apt-get install opencpn
+
+sudo add-apt-repository  --remove ppa:opencpn/opencpn
+
+Baixado 32bit.deb
+Instalado
+#adicionar chave do repositorio. Ocorreu com o QGis
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys KEYNUMBER-AQUI
