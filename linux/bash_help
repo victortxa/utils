@@ -1,0 +1,22 @@
+Fatiando general alias
+#alias lfatiando='ls /usr/local/anaconda/lib/python2.7/site-packages/fatiando'
+#alias cdfatiando='cd /usr/local/anaconda/lib/python2.7/site-packages/fatiando'
+#alias fatiandoPATH='export PYTHONPATH=/home/victor/fatiando:$PYTHONPATH'
+
+alias testfatiando='py.test --doctest-modules --pyargs fatiando'
+
+alias env-fatiando='source activate fatiando-dev'
+
+#alias covfatiando='py.test --cov-report term-missing --cov=fatiando --doctest-modules --pyargs fatiando'
+
+
+
+Bash function
+
+covfatiando(){
+if [ $# -eq 0 ]; then
+        py.test --cov-report term-missing --cov=fatiando --doctest-modules --pyargs fatiando
+else
+ py.test --cov-report term-missing --cov=fatiando."$1" --doctest-modules --pyargs fatiando."$1"
+fi
+}
