@@ -1,6 +1,23 @@
 program main_attributes
-!  gfortran -o main main_attributes.f90 dissimilarity_error_magnitude.f90 -I/usr/local/include -L/usr/lib/x86_64-linux-gnu 
-! -lfftw3_omp -lfftw3 -lm -fopenmp
+!   $gfortran-5 -o error error.f90 main_error.f90 -I/usr/local/include -L/usr/lib/x86_64-linux-gnu -lfftw3_omp -lfftw3 -lm -fopenmp
+!!  error.f90:37:0:
+
+!!       DO indiceY=1+2*window,ny-2*window
+!!   ^
+!!  internal compiler error: in gfc_omp_clause_default_ctor, at fortran/trans-openmp.c:481
+!!  Please submit a full bug report,
+!!  with preprocessed source if appropriate.
+!!  See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
+!!  *** gfortran  4.8.4 ***
+!!gfortran -o error error.f90 main_error.f90 -I/usr/local/include -L/usr/lib/x86_64-linux-gnu -lfftw3_omp -lfftw3 -lm -fopenmp
+!!error.f90: In function ‘error’:
+!!error.f90:37:0: internal compiler error: in gfc_omp_clause_default_ctor, at fortran/trans-openmp.c:172
+!!     DO indiceY=1+2*window,ny-2*window
+!! ^
+!!Please submit a full bug report,
+!!with preprocessed source if appropriate.
+!!See <file:///usr/share/doc/gcc-4.8/README.Bugs> for instructions.
+
 USE ERROR_MAG
 USE, intrinsic:: iso_c_binding
 IMPLICIT NONE
