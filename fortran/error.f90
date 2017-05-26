@@ -3,25 +3,18 @@ USE omp_lib
 USE, intrinsic:: iso_c_binding
 CONTAINS
 
-SUBROUTINE error(matrix_in, filter_window, matrix_outX)
+SUBROUTINE error(matrix_in, nx, ny, nz, filter_window, matrix_outX)
 IMPLICIT NONE
 INCLUDE 'fftw3.f'
-DOUBLE COMPLEX, INTENT(IN):: matrix_in(:, :, :)
-INTEGER, INTENT(IN):: filter_window
+INTEGER, INTENT(IN):: filter_window, nx, ny, nz
+DOUBLE COMPLEX, INTENT(IN):: matrix_in(nx,ny,nz)
 REAL, INTENT(OUT), ALLOCATABLE:: matrix_outX(:, :, :)
 DOUBLE COMPLEX, ALLOCATABLE:: OUTPUT_FFTW(:, :, :)
-INTEGER:: nx, ny, nz
-INTEGER:: indiceX, indiceY, indiceZ
-INTEGER:: window
+INTEGER:: indiceX, indiceY, indiceZ, window, iret, nthreads
 integer*8:: plan
-integer::iret, nthreads
 
 ! FFTW output memory allocation
 ALLOCATE(OUTPUT_FFTW(filter_window, filter_window, filter_window))
-
-nx = SIZE(matrix_in,1)
-ny = SIZE(matrix_in,2)
-nz = SIZE(matrix_in,3)
 
 ALLOCATE(matrix_outX(nx, ny, nz))
 matrix_outX = 0.
@@ -36,7 +29,6 @@ CALL dfftw_plan_dft_3d(plan, filter_window, filter_window, filter_window, OUTPUT
 DO indiceZ=1+2*window,nz-2*window
     DO indiceY=1+2*window,ny-2*window
         DO indiceX=1+2*window,nx-2*window
-        ! CALCULATION IN THE X DIRECTION
             OUTPUT_FFTW = ABS(matrix_in(indiceX-2*window:indiceX, indiceY-window:indiceY+window,& 
                                                                  indiceZ-window:indiceZ+window) - &
                               matrix_in(indiceX:indiceX+2*window, indiceY-window:indiceY+window,&

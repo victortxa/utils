@@ -25,11 +25,7 @@ INCLUDE 'fftw3.f'
 INTEGER(kind=2),ALLOCATABLE  :: datajp(:,:,:)
 DOUBLE COMPLEX, ALLOCATABLE:: datajp_c(:,:,:)
 REAL,ALLOCATABLE :: matrix_outX(:,:,:)
-INTEGER::Nx,Ny,Nz,i
-
-Nx = 500
-Ny = 500
-Nz = 500
+INTEGER::Nx=500,Ny=500,Nz=500,i
 
 ALLOCATE(datajp(Nz,Ny,Nx),datajp_c(Nz,Ny,Nx))
 ALLOCATE(matrix_outX(Nz,Ny,Nx))
@@ -37,7 +33,7 @@ ALLOCATE(matrix_outX(Nz,Ny,Nx))
 datajp=reshape((/(i, i=1,Nx*Ny*Nz)/),shape(datajp))
 datajp_c=DCMPLX(datajp)
 
-CALL error(datajp_c, 5, matrix_outX)
+CALL error(datajp_c, Nx, Ny, Nz, 5, matrix_outX)
 write(*,*) 'MAIN-IMAGEOUT X sum main= ',SUM(matrix_outX)
 
 OPEN(44, FILE="outputfile.raw", FORM="UNFORMATTED", STATUS="NEW", ACTION="WRITE", ACCESS='STREAM')
